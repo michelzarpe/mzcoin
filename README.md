@@ -1,0 +1,2 @@
+# mzcoin
+criando criptomoeda mzcoin

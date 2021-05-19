@@ -95,10 +95,22 @@ class Blockchain:
             response = requests.get(f'http://{node}/get_chain')
             if response.status_code == 200:
                 length = response.json()['lenght']
+                chain = response.json()['chain']
+                if length > maxLength and self.isChainValid(chain):
+                    maxLength = length #atualizar
+                    longestChain = chain #atualizar chain mais novo
+        if longestChain: 
+            self.chain = longestChain
+            return True
+        return False
+                            
         
             
 
 app = Flask(__name__)
+
+nodeAdress = str(uuid4()).replace('-', '')
+
 blockchian = Blockchain()
 
 @app.route('/mine_block',methods = ['GET'])
@@ -107,12 +119,14 @@ def mine_block():
     previousProof = previousBlock['proof']
     proof = blockchian.proofOfWork(previousProof)
     previousHash = blockchian.hash(previousBlock)
+    blockchian.addTransaction(nodeAdress, 'Vilson', 1)
     block = blockchian.createBlock(proof, previousHash)
     response = {'message':'Parabéns por minerar um bloco',
                 'index': block['index'],
                 'timestamp':block['timestamp'],
                 'proof':block['proof'],
-                'previous_hash':block['previous_hash']}
+                'previous_hash':block['previous_hash'],
+                'transaction': block['transctions']}
     return jsonify(response), 200
 
 
@@ -132,7 +146,15 @@ def is_valid():
         
     return jsonify(response), 200
 
-      
+@app.route('/add_transaction',methods = ['POST'])
+def add_transaction(): 
+    json = request.get_json()
+    transactionKeys = ['sender','receiver','amount']
+    if not all(key in json for key in transactionKeys): 
+        return 'Alguns elementos estão faltando', 400
+    index = blockchian.addTransaction(json['sender'], json['receiver'], json['amount'])
+    response = {'message':f'Esta transacao será adicionada ao bloco {index}'} 
+    return jsonify(response), 201
 app.run(host = '0.0.0.0', port = 5000)
 
     

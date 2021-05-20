@@ -155,9 +155,50 @@ def add_transaction():
     index = blockchian.addTransaction(json['sender'], json['receiver'], json['amount'])
     response = {'message':f'Esta transacao será adicionada ao bloco {index}'} 
     return jsonify(response), 201
+
+@app.route('/connect_node',methods = ['POST'])
+def connect_node():
+    json = request.get_json()
+    nodes = json.get('nodes')
+    if nodes is None:
+        return "vazio!", 400
+    for node in nodes:
+        blockchian.addNode(node)
+    response = {'message': 'Todos os nós conectados',
+                    'total_nodes': list(blockchian.nodes)}
+    return jsonify(response), 201
+
+@app.route('/replace_chain',methods = ['POST'])
+def replace_chain():
+    isChainReplace = blockchian.replaceChain()
+    if isChainReplace():
+        response = {'message': 'nos foram substituidos devido a cadeias diferentes', 
+                    'new_chain':blockchian.chain}
+    else:
+        response = {'message': 'não houve substituição',
+                    'chain': blockchian}
+    return jsonify(response), 201
+
 app.run(host = '0.0.0.0', port = 5000)
 
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

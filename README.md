@@ -1,6 +1,6 @@
 # mzcoin
 ## Criando demonstração de criptomoeda mzcoin
-Python 3.8 
+Python 3.8  
 Usando anaconda e ide Spyder
 
 

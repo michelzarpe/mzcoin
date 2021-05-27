@@ -1,5 +1,5 @@
 # mzcoin
-##Criando demonstração de criptomoeda mzcoin
+## Criando demonstração de criptomoeda mzcoin
 
 Para realizar uma demonstração de uma rede distribuida é preciso triplicar o arquivo com o codigo e mudar a porta a ser executado. As portas que vamos utilizar nos exemplos são: 
 1.  app.run(host = '0.0.0.0', port = 5001)

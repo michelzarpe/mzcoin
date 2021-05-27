@@ -1,5 +1,8 @@
 # mzcoin
 ## Criando demonstração de criptomoeda mzcoin
+Python 3.8 
+Usando anaconda e ide Spyder
+
 
 Para realizar uma demonstração de uma rede distribuída é preciso triplicar o arquivo com o código e mudar a porta a ser executado. As portas que vamos utilizar nos exemplos são: 
 1.  app.run(host = '0.0.0.0', port = 5001)

@@ -14,19 +14,20 @@ from urllib.parse import urlparse
 
 #primeira parte -> criar um blockchain
 class Blockchain:
+
     def __init__(self):
         self.chain = []
         self.transaction = []
         self.createBlock(proof = 1, previous_hash='0')
         self.nodes = set() #objetos do tipo set para os nós participantes da rede
     
-    def createBlock(self,proof, previous_hash):
+    def createBlock(self, proof, previous_hash):
         #criando um dicionario 
-        block = {'index':len(self.chain)+1,
-                 'timestamp':str(datetime.datetime.now()),
-                 'proof':proof,
-                 'previous_hash':previous_hash,
-                 'transactions':self.transaction}
+        block = {'index': len(self.chain)+1,
+                 'timestamp': str(datetime.datetime.now()),
+                 'proof': proof,
+                 'previous_hash': previous_hash,
+                 'transactions': self.transaction}
         self.transaction = []
         self.chain.append(block)
         return block
@@ -126,7 +127,7 @@ def mine_block():
                 'timestamp':block['timestamp'],
                 'proof':block['proof'],
                 'previous_hash':block['previous_hash'],
-                'transaction': block['transctions']}
+                'transaction': block['transactions']}
     return jsonify(response), 200
 
 
